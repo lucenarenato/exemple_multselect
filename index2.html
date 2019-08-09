@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<link href="fSelect.css" rel="stylesheet">
+<script src="jquery.min.js"></script>
+<script src="fSelect.js"></script>
+<script>
+(function($) {
+    $(function() {
+        $('.multi-select-dd').fSelect();
+    });
+})(jQuery);
+</script>
+
+</head>
+
+<body>
+<h3>A Demo of jQuery multi-select</h3>
+    <select class="multi-select-dd" multiple="multiple">
+            <option value="MySQL" selected>MySQL</option>
+            <option value="SQLServer" >SQL Server</option>
+            <option value="Oracle">Oracle</option>
+            <option value="HTML" selected>HTML</option>
+            <option value="CSS">CSS</option>
+            <option value="jQuery">jQuery</option>
+            <option value="Bootstrap">Bootstrap</option>
+    </select>
+</body>
+</html>

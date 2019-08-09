@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+   <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Multi step form with progress bar and validation</title>
+<link rel='stylesheet' id='fes-css'  href='style-mult-step.css?ver=5.2.2' type='text/css' media='all' />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.js"></script>
+   </head>
+<body>
+<div class="container">
+<div class="progress">
+		  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+		</div>
+<form class="form" action="" method="POST">
+<div class="step">Window 1</div>
+<div class="step">Window 2</div>
+<div class="step">Window 3</div>
+<div class="step">Window 4</div>
+<p><button class="action back" type="button">Back</button> <button class="action next" type="button">Next</button> <button class="action submit" type="button">Submit</button></p></form>
+</div>
+
+  
+</body>
+
+<script type='text/javascript'>
+$(document).ready(function(){
+	var current = 1;
+	
+	widget      = $(".step");
+	btnnext     = $(".next");
+	btnback     = $(".back"); 
+	btnsubmit   = $(".submit");
+
+	// Init buttons and UI
+	widget.not(':eq(0)').hide();
+	hideButtons(current);
+	setProgress(current);
+
+	// Next button click action
+	btnnext.click(function(){
+		if(current &lt; widget.length){
+			// Check validation
+			if($(".form").valid()){
+				widget.show();
+				widget.not(':eq('+(current++)+')').hide();
+				setProgress(current);
+			}
+		}
+		hideButtons(current);
+	})
+
+	// Back button click action
+	btnback.click(function(){
+		if(current &gt; 1){
+			current = current - 2;
+			if(current &lt; widget.length){
+				widget.show();
+				widget.not(':eq('+(current++)+')').hide();
+				setProgress(current);
+			}
+		}
+		hideButtons(current);
+	})
+
+	// Submit button click
+	btnsubmit.click(function(){
+		alert("Submit button clicked");
+	});
+
+    $('.form').validate({ // initialize plugin
+		ignore:":not(:visible)",			
+		rules: {
+			name : "required"
+		},
+    });
+
+});
+
+// Change progress bar action
+setProgress = function(currstep){
+	var percent = parseFloat(100 / widget.length) * currstep;
+	percent = percent.toFixed();
+	$(".progress-bar").css("width",percent+"%").html(percent+"%");		
+}
+
+// Hide buttons according to the current step
+hideButtons = function(current){
+	var limit = parseInt(widget.length); 
+
+	$(".action").hide();
+
+	if(current &lt; limit) btnnext.show();
+	if(current &gt; 1) btnback.show();
+	if (current == limit) { 
+		btnnext.hide(); 
+		btnsubmit.show();
+	}
+}
+</script>
+</html>
+
+
